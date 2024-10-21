@@ -57,13 +57,16 @@ class NewsController extends \GeorgRinger\News\Controller\NewsController
         $organizerPidList = $this->settings['startingpointOrganizer'] ?? $this->settings['startingpoint'];
         $locationPidList = $this->settings['startingpointLocation'] ?? $this->settings['startingpoint'];
 
+        $tsfe = $this->request->getAttribute('frontend.controller');
+
         $assignedValues = [
             'search' => $search,
             'news' => $newsRecordsWithDaySupport,
             'newsWithNoDaySupport' => $newsRecordsWithNoDaySupport,
             'overwriteDemand' => $overwriteDemand,
             'demand' => $demand,
-            'currentPageId' => $GLOBALS['TSFE']->id,
+            // @extensionScannerIgnoreLine
+            'currentPageId' => $tsfe->id,
             'allOrganizers' => $this->organizerRepository->findByStartingPoint($organizerPidList),
             'allLocations' => $this->locationRepository->findByStartingPoint($locationPidList),
             'allCategories' => empty($categories) ? [] : $categoryRepository->findByIdList($categories),
