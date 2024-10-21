@@ -63,7 +63,7 @@ class CalendarViewHelper extends AbstractViewHelper
 
                 $day['dayBelongsToCurrentMonth'] = $inCurrentMonthBefore;
                 $day['ts'] = $dts;
-                $day['day'] = (int)date('j', $dts);
+                $day['day'] = (string)date('j', $dts); // todo: change back to int cast when https://review.typo3.org/c/Packages/TYPO3.CMS/+/86664 is fixed
                 $day['month'] = (int)date('n', $dts);
                 $day['year'] = (int)date('Y', $dts);
                 $day['curmonth'] = $day['month'] == $month;

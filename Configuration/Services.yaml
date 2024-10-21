@@ -14,7 +14,7 @@ services:
         identifier: 'eventnews-newsimportlistener'
         event: GeorgRinger\News\Event\NewsImportPostHydrateEvent
 
-  GeorgRinger\Eventnews\Hooks\FlexFormHook:
+  GeorgRinger\Eventnews\EventListener\AfterFlexFormDataStructureParsedEventListener:
     tags:
       - name: event.listener
         identifier: 'eventnews-flexformhook'

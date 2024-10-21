@@ -19,6 +19,7 @@ class IconHookTest extends BaseTestCase
     public function iconForEventNewsIsChanged(array $configuration, $returnValue): void
     {
         $instance = new IconHook();
+        // @extensionScannerIgnoreLine
         $this->assertEquals($returnValue, $instance->run($configuration));
     }
 

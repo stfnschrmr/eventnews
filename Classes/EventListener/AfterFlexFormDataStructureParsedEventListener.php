@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace GeorgRinger\Eventnews\Hooks;
+namespace GeorgRinger\Eventnews\EventListener;
 
 /**
  * This file is part of the "eventnews" Extension for TYPO3 CMS.
@@ -16,7 +16,7 @@ use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class FlexFormHook
+class AfterFlexFormDataStructureParsedEventListener
 {
 
     public function __invoke(AfterFlexFormDataStructureParsedEvent $event): void
@@ -33,18 +33,7 @@ class FlexFormHook
         $event->setDataStructure($dataStructure);
     }
 
-    public function parseDataStructureByIdentifierPostProcess(array $dataStructure, array $identifier): array
-    {
-        if ($identifier['type'] === 'tca' && $identifier['tableName'] === 'tt_content' && $this->isActiveOnKey($identifier['dataStructureKey'])) {
-            $content = file_get_contents($this->getPath());
-            if ($content) {
-                $dataStructure['sheets']['extraEntryEventNews'] = GeneralUtility::xml2array($content);
-            }
-        }
-        return $dataStructure;
-    }
-
-    protected function isActiveOnKey(string $dataStructureKey): bool
+    private function isActiveOnKey(string $dataStructureKey): bool
     {
         $validKeys = ['*,eventnews_', '*,news_'];
         $active = false;
@@ -57,7 +46,7 @@ class FlexFormHook
         return $active;
     }
 
-    protected function getPath(): string
+    private function getPath(): string
     {
         $file = (new Typo3Version())->getMajorVersion() >= 12 ? 'flexform_eventnews12.xml' : 'flexform_eventnews.xml';
         return ExtensionManagementUtility::extPath('eventnews') . 'Configuration/Flexforms/' . $file;

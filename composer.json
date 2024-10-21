@@ -23,11 +23,8 @@
     ],
     "license": ["GPL-2.0-or-later"],
     "require": {
-        "georgringer/news": "^11.3",
-        "typo3/cms-core": "^11 || ^12.4"
-    },
-    "require-dev": {
-        "php-coveralls/php-coveralls": "^2.1"
+        "georgringer/news": "^11.3 || ^12",
+        "typo3/cms-core": "^12 || ^13"
     },
     "autoload": {
         "psr-4": {
@@ -38,9 +35,6 @@
         "psr-4": {
             "GeorgRinger\\Eventnews\\Tests\\": "Tests"
         }
-    },
-    "replace": {
-        "typo3-ter/eventnews": "self.version"
     },
     "config": {
         "vendor-dir": ".Build/vendor",

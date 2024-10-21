@@ -6,8 +6,9 @@ $pluginNameForLabel = $pluginName === 'pi1' ? 'news_list' : $pluginName;
     'eventnews',
     'NewsMonth',
     'LLL:EXT:eventnews/Resources/Private/Language/locallang_db.xlf:plugin.news_month.title',
-    null,
-    'news'
+    'ext-news-type-event',
+    'news',
+    'LLL:EXT:eventnews/Resources/Private/Language/locallang_db.xlf:plugin.news_month.description',
 );
 
 $contentTypeName = 'eventnews_newsmonth';

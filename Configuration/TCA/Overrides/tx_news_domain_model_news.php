@@ -24,11 +24,7 @@ $fields = [
         'displayCond' => 'FIELD:is_event:>:0',
         'label' => 'LLL:EXT:eventnews/Resources/Private/Language/locallang_db.xlf:tx_eventnews_domain_model_news.event_end',
         'config' => [
-            'default' => 0,
-            'type' => 'input',
-            'renderType' => 'inputDateTime',
-            'size' => 12,
-            'eval' => 'datetime,int',
+            'type' => 'datetime',
         ],
     ],
     'organizer' => [
@@ -40,7 +36,7 @@ $fields = [
             'type' => 'select',
             'renderType' => 'selectSingle',
             'items' => [
-                ['', 0],
+                ['label' => '', 'value' => 0],
             ],
             'foreign_table' => 'tx_eventnews_domain_model_organizer',
             'foreign_table_where' => 'ORDER BY tx_eventnews_domain_model_organizer.title',
@@ -57,7 +53,7 @@ $fields = [
             'type' => 'select',
             'renderType' => 'selectSingle',
             'items' => [
-                ['', 0],
+                ['label' => '', 'value' => 0],
             ],
             'foreign_table' => 'tx_eventnews_domain_model_location',
             'foreign_table_where' => 'ORDER BY tx_eventnews_domain_model_location.title',

@@ -14,10 +14,6 @@
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tceforms.php']['getSingleFieldClass']['eventnews']
     = \GeorgRinger\Eventnews\Hooks\FormEngineHook::class;
 
-// Update flexforms
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS'][\TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools::class]['flexParsing'][]
-    = \GeorgRinger\Eventnews\Hooks\FlexFormHook::class;
-
 $GLOBALS['TYPO3_CONF_VARS']['EXT']['news'][\GeorgRinger\News\Hooks\PluginPreviewRenderer::class]['extensionSummary']['eventnews']
     = \GeorgRinger\Eventnews\Hooks\PageLayoutView::class . '->extensionSummary';
 
@@ -40,7 +36,10 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
 
 $GLOBALS['TYPO3_CONF_VARS']['EXT']['news']['classes']['Domain/Model/News'][] = 'eventnews';
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('@import \'EXT:eventnews/Configuration/TSconfig/ContentElementWizard.tsconfig\'');
+if ((new \TYPO3\CMS\Core\Information\Typo3Version())->getMajorVersion() < 13) {
+    // @extensionScannerIgnoreLine
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('@import \'EXT:eventnews/Configuration/TSconfig/ContentElementWizard.tsconfig\'');
+}
 
 // override language files of news
 $overrideModuleLable = (bool)\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('eventnews', 'overrideAdministrationModuleLabel');
