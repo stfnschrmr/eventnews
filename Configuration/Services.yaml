@@ -19,3 +19,15 @@ services:
       - name: event.listener
         identifier: 'eventnews-flexformhook'
         event: TYPO3\CMS\Core\Configuration\Event\AfterFlexFormDataStructureParsedEvent
+
+  GeorgRinger\Eventnews\EventListener\Administration\ModifyQueryEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'eventnews-administration-modifyquery'
+        event: GeorgRinger\NewsAdministration\Event\ModifyQueryEvent
+
+  GeorgRinger\Eventnews\EventListener\Administration\IndexActionEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'eventnews-administration-modifyhtml'
+        event: GeorgRinger\NewsAdministration\Event\AdministrationIndexActionEvent
