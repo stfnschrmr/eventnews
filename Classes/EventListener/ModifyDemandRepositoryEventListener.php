@@ -1,6 +1,6 @@
 <?php
 
-namespace GeorgRinger\Eventnews\Hooks;
+namespace GeorgRinger\Eventnews\EventListener;
 
 /**
  * This file is part of the "eventnews" Extension for TYPO3 CMS.
@@ -10,53 +10,41 @@ namespace GeorgRinger\Eventnews\Hooks;
  */
 
 use GeorgRinger\Eventnews\Domain\Model\Dto\Demand;
+use GeorgRinger\News\Domain\Model\DemandInterface;
 use GeorgRinger\News\Domain\Model\News;
+use GeorgRinger\News\Event\ModifyDemandRepositoryEvent;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
-class AbstractDemandedRepository
+class ModifyDemandRepositoryEventListener
 {
 
-    /**
-     * Modify the constraints used in the query
-     *
-     * @param array $params
-     * @return void
-     */
-    public function modify(array $params)
+    public function __invoke(ModifyDemandRepositoryEvent $event): void
     {
-        if (!($params['demand'] instanceof Demand)) {
+        if (!($event->getDemand() instanceof Demand)) {
             return;
         }
-
-        $queryType = $params['query']->getType();
+        $queryType = $event->getQuery()->getType();
 
         if ($queryType !== News::class && !is_subclass_of($queryType, News::class)) {
             return;
         }
 
+        $constraints = $event->getConstraints();
+
         $this->updateEventConstraints(
-            $params['demand'],
-            $params['respectEnableFields'],
-            $params['query'],
-            $params['constraints']
+            $event->getDemand(),
+            $event->getQuery(),
+            $constraints
         );
+        $event->setConstraints($constraints);
     }
 
-    /**
-     * Update the main event constraints
-     *
-     * @param Demand $demand
-     * @param bool $respectEnableFields
-     * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
-     * @param array $constraints
-     * @return void
-     */
     protected function updateEventConstraints(
-        Demand $demand,
-        $respectEnableFields,
-        \TYPO3\CMS\Extbase\Persistence\QueryInterface $query,
+        DemandInterface $demand,
+        QueryInterface $query,
         array &$constraints
-    ) {
+    ): void
+    {
         $eventRestriction = $demand->getEventRestriction();
 
         /** @var QueryInterface $query */
@@ -133,13 +121,13 @@ class AbstractDemandedRepository
      * @param int $end
      * @return array
      */
-    protected function getDateConstraint(\TYPO3\CMS\Extbase\Persistence\QueryInterface $query, $dateField, $begin, $end)
+    protected function getDateConstraint(QueryInterface $query, $dateField, $begin, $end)
     {
         $eventsWithNoEndDate = [
             $query->logicalAnd(
                 $query->greaterThanOrEqual($dateField, $begin),
                 $query->lessThanOrEqual($dateField, $end)
-            )
+            ),
         ];
 
         $eventsWithEndDate = [
@@ -163,12 +151,12 @@ class AbstractDemandedRepository
             $query->logicalAnd(
                 $query->lessThanOrEqual($dateField, $end),
                 $query->greaterThanOrEqual('eventEnd', $end)
-            )
+            ),
         ];
 
         $dateConstraints = [
             $query->logicalAnd(...$eventsWithNoEndDate),
-            $query->logicalOr(...$eventsWithEndDate)
+            $query->logicalOr(...$eventsWithEndDate),
         ];
         return $dateConstraints;
     }

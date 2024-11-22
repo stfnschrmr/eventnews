@@ -31,3 +31,9 @@ services:
       - name: event.listener
         identifier: 'eventnews-administration-modifyhtml'
         event: GeorgRinger\NewsAdministration\Event\AdministrationIndexActionEvent
+
+  GeorgRinger\Eventnews\EventListener\ModifyDemandRepositoryEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'eventnews-modifydemandrepository'
+        event: GeorgRinger\News\Event\ModifyDemandRepositoryEvent
