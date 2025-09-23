@@ -9,3 +9,9 @@ $GLOBALS['TCA']['pages']['columns']['module']['config']['items'][] = [
     'icon' => 'apps-pagetree-folder-contains-eventnews',
 ];
 $GLOBALS['TCA']['pages']['ctrl']['typeicon_classes']['contains-eventnews'] = 'apps-pagetree-folder-contains-eventnews';
+
+ExtensionManagementUtility::registerPageTSConfigFile(
+    'eventnews',
+    'Configuration/TSconfig/eventnews_only.tsconfig',
+    'EXT:eventnews :: Restrict pages to eventnews records'
+);
