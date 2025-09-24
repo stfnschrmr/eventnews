@@ -110,8 +110,7 @@ $tx_eventnews_domain_model_location = [
             'label' => 'LLL:EXT:eventnews/Resources/Private/Language/locallang_db.xlf:tx_eventnews_domain_model_location.description',
             'config' => [
                 'type' => 'text',
-                'cols' => 30,
-                'rows' => 4,
+                'enableRichtext' => true,
                 'eval' => 'trim',
             ],
         ],
