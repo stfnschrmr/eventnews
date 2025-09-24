@@ -106,7 +106,9 @@ $tx_eventnews_domain_model_organizer = [
             'label' => 'LLL:EXT:eventnews/Resources/Private/Language/locallang_db.xlf:tx_eventnews_domain_model_organizer.description',
             'config' => [
                 'type' => 'text',
-                'enableRichtext' => true,
+                'cols' => 30,
+                'rows' => 4,
+                'eval' => 'trim',
             ],
         ],
         'link' => [
